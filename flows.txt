@@ -1,0 +1,17 @@
+Flow 1
+    1. Call HN API with search term
+    2. Extract all post IDs, Titles, Story Text and Creation Dates
+    3. Filter posts so that only the 'who is hiring' posts remain
+    4. Save all 'who is hiring' post data to a hn post db
+
+Flow 2
+    1. Iterate through all post IDs calling the HN API and obtain comments for each post
+    2. Save comments to an unsorted table in the hn post db
+    3. Use Regex to go through each comment per post and create a structured data table
+
+DB Schema
+    1. Posts Table (Post_ID (Primary Key), Title, Story_Text, Creation_date, Num_Comments)
+    2. Unfiltered Comments Table(Post_ID(Foreign Key), Comment)
+
+Tasks
+    1. Refactor functions in main to create the Filter class 
