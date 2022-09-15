@@ -1,6 +1,10 @@
+import re
+
 search_keywords = ['location', 'postiion', 'keywords', 'remote', 'interns', 'visa', 'candidate', 'hiring', 'job']
 month_list = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'deccember']
 year_list = ['2019', '2020', '2021', '2022']
+month_string = "january|february|march|april|may|june|july|august|september|october|november|deccember"
+year_string = "2019|2020|2021|2022"
 
 class Filter():
     
@@ -29,23 +33,21 @@ class Filter():
     
 
 
-    def filter_posts(search_results_p):
+    def filter_posts(self):
         '''Takes in an unfiltered list and checks if specific keywords exist in the post, then returns a filtered list'''
     
         filtered_list = []
 
-        for post in search_results_p:
+        for post in self.list_of_results:
+            title = post['title'].lower()
             
-            found_keywords = 0
-            search_string = post['story_text'].lower()
-            search_string_list = search_string.split()
+            test_exp = re.search("^ask hn: who is hiring?", title)
+            month_check = re.findall(month_string, title)
+            year_check = re.findall(year_string, title)
+
+            if test_exp and month_check and year_check:
+                filtered_list.append(post)
             
-            for keyword in search_keywords:
-                if keyword in search_string_list:
-                    found_keywords += 1
-                    #print(f'Keyword: {keyword}\nCount: {found_keywords}')
-                if found_keywords > (len(search_keywords)/2):
-                    found_keywords = 0
-                    filtered_list.append(post)
-        
         return filtered_list
+        
+        
