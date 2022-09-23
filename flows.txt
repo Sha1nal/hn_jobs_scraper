@@ -2,8 +2,13 @@ Flow 1
     1. Call HN API with search term
     2. Extract all post IDs, Titles, Story Text and Creation Dates
     3. Filter posts so that only the 'who is hiring' posts remain
+        3.1 Fix filtering function in the filter class
+        3.2 Implement a sorting algorithm to sort posts by 'created_at_i' in ascending order 
     4. Save all 'who is hiring' post data to a hn post db
-
+        4.1 Create a migrations.py file that handles changes to the schema of the DB
+        4.1 Create a services.py file that handles all accessing of the DB
+        4.2 Load data in DB
+        
 Flow 2
     1. Iterate through all post IDs calling the HN API and obtain comments for each post
     2. Save comments to an unsorted table in the hn post db
