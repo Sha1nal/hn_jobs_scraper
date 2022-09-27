@@ -1,11 +1,10 @@
 # ----------- Imports ----------- 
 
-
-from encodings import search_function
 import requests
 import json
-import sqlite3
 import filter
+import algos
+
 
 from os.path import exists
 
@@ -18,13 +17,6 @@ hn_query = 'http://hn.algolia.com/api/v1/search?query=ask hn: who is hiring who\
 
 
 # ----------- Function Defintions ----------- 
-
-
-# ----------- Database ----------- 
-
-
-def create_table(create_table_string):
-    pass
 
 
 # ----------- Main ----------- 
@@ -41,8 +33,6 @@ if not exists(hn_data_file):
 
     with open('hn_search.txt', 'w') as f:
         f.write(search_results)
-else:
-    print('got here trying')
 
 with open('hn_search.txt', 'r') as f:
     data = f.read()
@@ -51,5 +41,18 @@ with open('hn_search.txt', 'r') as f:
 
 result_list = filter.Filter(search_results)
 
-for result in result_list.list_of_results:
-    print(f"{result['title']} - {result['created_at_i']}")
+filtered_list = result_list.filter_posts()
+sorted_list = algos.bubble_sort(filtered_list)
+
+i = 0
+for result in sorted_list:
+    post_id = result['objectID']
+    title = result['title']
+    text = result['story_text']
+    date = result['created_at']
+
+    print(f"ID: {post_id}\nTitle: {title}\nText: {text}\nDate: {date}\n")
+
+
+
+
